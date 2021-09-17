@@ -1,18 +1,13 @@
 import express from "express";
-import morgan from "morgan";
-import globalRouter from "./routers/globalRouter";
-import videoRouter from "./routers/videoRouter";
-import userRouter from "./routers/userRouter";
 
-const PORT = process.env.PORT || 4000;
+import globalRouter from "./routers/globalRouter";
+import userRouter from "./routers/userRouter";
+import storyRouter from "./routers/storyRouter";
 
 const app = express();
 
-const logger = morgan("dev");
-app.use(logger);
+app.use("/", globalRouter);
+app.use("/users", userRouter);
+app.use("/stories", storyRouter);
 
-app.use(`/`, globalRouter);
-app.use(`/videos`, videoRouter);
-app.use(`/users`, userRouter);
-
-app.listen(PORT, () => console.log(`Hi😎`));
+app.listen(4000, () => console.log(`Listening!`));
