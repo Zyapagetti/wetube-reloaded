@@ -1,0 +1,8 @@
+mixin video(potato)
+    div
+        h4=potato.title
+            ul
+                li #{potato.rating}/5
+                li #{potato.comments} comments.
+                li Posted #{potato.createdAt}.
+                li #{potato.views} views.
