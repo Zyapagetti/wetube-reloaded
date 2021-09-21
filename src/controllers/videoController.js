@@ -1,36 +1,63 @@
+let videos = [
+  {
+    title: "First Video",
+    rating: 5,
+    comments: 2,
+    createdAt: "22 minutes ago",
+    views: 0,
+    id: 1,
+  },
+  {
+    title: "Second Video",
+    rating: 5,
+    comments: 2,
+    createdAt: "22 minutes ago",
+    views: 59,
+    id: 2,
+  },
+  {
+    title: "Third Video",
+    rating: 5,
+    comments: 2,
+    createdAt: "22 minutes ago",
+    views: 59,
+    id: 3,
+  },
+];
+
 export const trending = (req, res) => {
-  const videos = [
-    {
-      title: "First Video",
-      rating: 5,
-      comments: 2,
-      createdAt: "22 minutes ago",
-      views: 59,
-      id: 1,
-    },
-    {
-      title: "Second Video",
-      rating: 5,
-      comments: 2,
-      createdAt: "22 minutes ago",
-      views: 59,
-      id: 1,
-    },
-    {
-      title: "Third Video",
-      rating: 5,
-      comments: 2,
-      createdAt: "22 minutes ago",
-      views: 59,
-      id: 1,
-    },
-  ];
-  res.render("home", { pageTitle: "Home", videos });
+  return res.render("home", { pageTitle: "Home", videos });
 };
-export const see = (req, res) => res.render("watch");
-export const edit = (req, res) => res.render("edit");
-export const search = (req, res) => res.send(`Search videos`);
-export const upload = (req, res) => res.send(`Upload videos`);
-export const deleteVideo = (req, res) => {
-  return res.send(`Delete videos #${req.params.id}`);
+export const watch = (req, res) => {
+  const { id } = req.params; // SAME AS - const id = req.parans.id;
+  const video = videos[id - 1];
+  console.log(video.title);
+  return res.render("watch", { pageTitle: video.title, video });
+};
+export const getEdit = (req, res) => {
+  const { id } = req.params;
+  const video = videos[id - 1];
+  return res.render("edit", { pageTitle: `Edit | ${video.title}`, video });
+};
+export const postEdit = (req, res) => {
+  const { id } = req.params;
+  const { title } = req.body;
+  videos[id - 1].title = title;
+  return res.redirect(`/videos/${id}`);
+};
+
+export const getUpload = (req, res) => {
+  return res.render("upload", { pageTitle: "Upload" });
+};
+export const postUpload = (req, res) => {
+  const newVideo = {
+    title: req.body.title,
+    rating: 0,
+    comments: 0,
+    createdAt: "Just now",
+    views: 0,
+    id: videos.length + 1
+  };
+  videos.push(newVideo);
+  return res.redirect("/");
 };
