@@ -1,3 +1,5 @@
+import "./db";
+import "./models/Video"
 import express from "express";
 import morgan from "morgan";
 import globalRouter from "./routers/globalRouter";
@@ -21,4 +23,4 @@ app.use(`/users`, userRouter);
 
 app.disable("x-powered-by");
 
-app.listen(PORT, () => console.log(`Hi😎`));
+app.listen(PORT, () => console.log(`✅ Server Connected`));
