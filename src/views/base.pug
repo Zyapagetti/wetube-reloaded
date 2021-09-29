@@ -1,20 +1,30 @@
 doctype html
 html(lang="ko")
     head
-        title #{pageTitle} | PugTube
+        title #{pageTitle} | #{siteName}
         link(rel="shortcut icon" href="https://cdn.worldvectorlogo.com/logos/pug.svg")
         link(rel="stylesheet" href="https://unpkg.com/mvp.css")
     body 
         header
-            h1=pageTitle 
+            h1=pageTitle
             nav 
                 ul 
                     li 
-                        a(href="/") Home
+                        a(href="/") 🏠Home
+                    if loggedIn 
+                        li 
+                            a(href="/") 🍒Logout
+                        li 
+                            a(href="/") 📂#{loggedInUser.name} | Profile
+                    else 
+                        li 
+                            a(href="/join") ✨Join
+                        li 
+                            a(href="/login") 🍒Login
                     li 
-                        a(href="/search") Search
+                        a(href="/search") 🔍Search
                     li 
-                        a(href="/videos/upload") Upload
+                        a(href="/videos/upload") 🎥Upload
         main
             block content
         include partials/footer
