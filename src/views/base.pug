@@ -13,9 +13,9 @@ html(lang="ko")
                         a(href="/") 🏠Home
                     if loggedIn 
                         li 
-                            a(href="/") 🍒Logout
+                            a(href="/users/logout") 🍒Logout
                         li 
-                            a(href="/") 📂#{loggedInUser.name} | Profile
+                            a(href=`/${loggedInUser.id}`) 📂#{loggedInUser.name} | Profile
                     else 
                         li 
                             a(href="/join") ✨Join
