@@ -1,5 +1,4 @@
 import bcrypt from "bcrypt";
-import e from "express";
 import fetch from "node-fetch";
 import User from "../models/User";
 
@@ -139,6 +138,29 @@ export const logout = (req, res) => {
   res.redirect("/");
 };
 
-export const see = (req, res) => res.send(`See user`);
+export const getEdit = (req, res) => {
+  return res.render("edit-profile", { pageTitle: "Edit Profile" });
+};
 
-export const edit = (req, res) => res.send(`Edit user`);
+export const postEdit = async (req, res) => {
+  const {
+    session: {
+      user: { _id },
+    },
+    body: { name, email, username, location },
+  } = req;
+  const updatedUser = await User.findByIdAndUpdate(
+    _id,
+    {
+      name,
+      email,
+      username,
+      location,
+    },
+    { new: true }
+  );
+  req.session.user = updatedUser;
+  return res.redirect("/users/edit");
+};
+
+export const see = (req, res) => res.send(`See user`);
