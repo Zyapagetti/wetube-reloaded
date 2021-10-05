@@ -149,6 +149,13 @@ export const postEdit = async (req, res) => {
     },
     body: { name, email, username, location },
   } = req;
+  const findUser = await User.findOne({ $and: [{ username }, { email }] });
+  if (findUser._id != _id) {
+    return res.render("edit-profile", {
+      pageTitle: "Edit Profile",
+      errorMessage: "Username or Email has already taken.",
+    });
+  }
   const updatedUser = await User.findByIdAndUpdate(
     _id,
     {
